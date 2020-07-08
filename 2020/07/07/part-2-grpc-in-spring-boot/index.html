@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Tạo ứng dụng Spring bootTạo ứng dụng Spring boot từ trang web https:&#x2F;&#x2F;start.spring.io&#x2F; Thêm gRPC vào dependencies12345678910111213141516171819202122232425262728&lt;plugins&gt;	&lt;plugin&gt;		&lt;grou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phần 2: gRPC trong Spring boot">
+<meta property="og:url" content="http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/index.html">
+<meta property="og:site_name" content="Sgalone">
+<meta property="og:description" content="Tạo ứng dụng Spring bootTạo ứng dụng Spring boot từ trang web https:&#x2F;&#x2F;start.spring.io&#x2F; Thêm gRPC vào dependencies12345678910111213141516171819202122232425262728&lt;plugins&gt;	&lt;plugin&gt;		&lt;grou">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://sgalone.github.io/images/image-0059f12df2cd47c085165a8ebc4b87c0.png">
+<meta property="og:image" content="http://sgalone.github.io/images/image-920eebf4dc77407cbd7ab148c24beb1f.png">
+<meta property="article:published_time" content="2020-07-07T14:32:11.000Z">
+<meta property="article:modified_time" content="2020-07-08T14:35:19.950Z">
+<meta property="article:author" content="Sgalone">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sgalone.github.io/images/image-0059f12df2cd47c085165a8ebc4b87c0.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Phần 2: gRPC trong Spring boot</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/07/06/part-1-what-is-grpc/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&text=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&is_video=false&description=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Phần 2: gRPC trong Spring boot&body=Check out this article: http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&name=Phần 2: gRPC trong Spring boot&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&t=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tao-ung-dung-Spring-boot"><span class="toc-number">1.</span> <span class="toc-text">Tạo ứng dụng Spring boot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Them-gRPC-vao-dependencies"><span class="toc-number">2.</span> <span class="toc-text">Thêm gRPC vào dependencies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tao-file-proto"><span class="toc-number">3.</span> <span class="toc-text">Tạo file proto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tao-file-Service"><span class="toc-number">4.</span> <span class="toc-text">Tạo file Service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test"><span class="toc-number">5.</span> <span class="toc-text">Test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-code-tham-khao"><span class="toc-number">6.</span> <span class="toc-text">Source code tham khảo</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Phần 2: gRPC trong Spring boot
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Sgalone</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-07T14:32:11.000Z" itemprop="datePublished">2020-07-07</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Tao-ung-dung-Spring-boot"><a href="#Tao-ung-dung-Spring-boot" class="headerlink" title="Tạo ứng dụng Spring boot"></a>Tạo ứng dụng Spring boot</h2><p>Tạo ứng dụng Spring boot từ trang web <a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io/</a><br><img src="/images/image-0059f12df2cd47c085165a8ebc4b87c0.png" alt="image.png"></p>
+<h2 id="Them-gRPC-vao-dependencies"><a href="#Them-gRPC-vao-dependencies" class="headerlink" title="Thêm gRPC vào dependencies"></a>Thêm gRPC vào dependencies</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugins&gt;</span><br><span class="line">	&lt;plugin&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-maven-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;&#x2F;plugin&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&lt;plugin&gt;</span><br><span class="line">		&lt;groupId&gt;org.xolstice.maven.plugins&lt;&#x2F;groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;protobuf-maven-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">		&lt;version&gt;$&#123;protobuf-maven-plugin.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">		&lt;configuration&gt;</span><br><span class="line">			&lt;protocArtifact&gt;com.google.protobuf:protoc:3.5.1-1:exe:$&#123;os.detected.classifier&#125;&lt;&#x2F;protocArtifact&gt;</span><br><span class="line">			&lt;pluginId&gt;grpc-java&lt;&#x2F;pluginId&gt;</span><br><span class="line">			&lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:1.16.1:exe:$&#123;os.detected.classifier&#125;&lt;&#x2F;pluginArtifact&gt;</span><br><span class="line">		&lt;&#x2F;configuration&gt;</span><br><span class="line">		&lt;executions&gt;</span><br><span class="line">			&lt;execution&gt;</span><br><span class="line">				&lt;goals&gt;</span><br><span class="line">					&lt;goal&gt;compile&lt;&#x2F;goal&gt;</span><br><span class="line">					&lt;goal&gt;compile-custom&lt;&#x2F;goal&gt;</span><br><span class="line">				&lt;&#x2F;goals&gt;</span><br><span class="line">			&lt;&#x2F;execution&gt;</span><br><span class="line">		&lt;&#x2F;executions&gt;</span><br><span class="line">	&lt;&#x2F;plugin&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;&#x2F;plugins&gt;</span><br></pre></td></tr></table></figure>
+<p>và </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;protobuf-maven-plugin.version&gt;0.6.1&lt;&#x2F;protobuf-maven-plugin.version&gt;</span><br><span class="line">&lt;grpcVersion&gt;1.24.0&lt;&#x2F;grpcVersion&gt;</span><br><span class="line">&lt;grpcStartVersion&gt;2.5.1.RELEASE&lt;&#x2F;grpcStartVersion&gt;</span><br><span class="line">&lt;grpc-spring-boot-starter.version&gt;3.0.0&lt;&#x2F;grpc-spring-boot-starter.version&gt;</span><br><span class="line">&lt;os-maven-plugin.version&gt;1.6.1&lt;&#x2F;os-maven-plugin.version&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tao-file-proto"><a href="#Tao-file-proto" class="headerlink" title="Tạo file proto"></a>Tạo file proto</h2><p>Tạo file hello.proto trong source src/proto</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">syntax &#x3D; &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">package com.demo.grpc.lib;</span><br><span class="line"></span><br><span class="line">option java_multiple_files &#x3D; true;</span><br><span class="line">option java_package &#x3D; &quot;com.demo.grpc.lib&quot;;</span><br><span class="line">option java_outer_classname &#x3D; &quot;HelloWorldProto&quot;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The greeting service definition.</span><br><span class="line">service MyService &#123;</span><br><span class="line">    &#x2F;&#x2F; Sends a greeting</span><br><span class="line">    rpc SayHello (HelloRequest) returns (HelloReply) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The request message containing the user&#39;s name.</span><br><span class="line">message HelloRequest &#123;</span><br><span class="line">    string name &#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The response message containing the greetings</span><br><span class="line">message HelloReply &#123;</span><br><span class="line">    string message &#x3D; 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Clean và compile lại ứng dụng</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mvn clean</span><br><span class="line">mvn compile</span><br></pre></td></tr></table></figure>
+<h2 id="Tao-file-Service"><a href="#Tao-file-Service" class="headerlink" title="Tạo file Service"></a>Tạo file Service</h2><p>Tạo file MyServiceImpl</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@GrpcService</span><br><span class="line">public class MyServiceImpl extends MyServiceGrpc.MyServiceImplBase &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void sayHello(HelloRequest request, StreamObserver&lt;HelloReply&gt; responseObserver) &#123;</span><br><span class="line">        HelloReply helloReply &#x3D; HelloReply.newBuilder()</span><br><span class="line">                .setMessage(&quot;Hello :&quot; + request.getName())</span><br><span class="line">                .build();</span><br><span class="line">        responseObserver.onNext(helloReply);</span><br><span class="line">        responseObserver.onCompleted();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>Run ứng dụng sẽ thấy log như này</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2020-07-06 21:28:54.415  INFO 5816 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService &#39;applicationTaskExecutor&#39;</span><br><span class="line">2020-07-06 21:28:54.903  INFO 5816 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path &#39;&#39;</span><br><span class="line">2020-07-06 21:28:55.011  INFO 5816 --- [           main] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: com.demo.grpc.lib.MyService, bean: myServiceImpl, class: com.example.demo.grpc.MyServiceImpl</span><br><span class="line">2020-07-06 21:28:55.841  INFO 5816 --- [           main] n.d.b.g.s.s.GrpcServerLifecycle          : gRPC Server started, listening on address: *, port: 9090</span><br><span class="line">2020-07-06 21:28:55.862  INFO 5816 --- [           main] com.example.demo.GrpcApplication         : Started GrpcApplication in 4.921 seconds (JVM running for 6.866)</span><br></pre></td></tr></table></figure>
+<p>Dễ dàng thấy RPC sẽ lắng nghe ở port 9090<br>Sử dụng BloomRPC để gọi đến RPC<br><img src="/images/image-920eebf4dc77407cbd7ab148c24beb1f.png" alt="image.png"></p>
+<h2 id="Source-code-tham-khao"><a href="#Source-code-tham-khao" class="headerlink" title="Source code tham khảo"></a>Source code tham khảo</h2>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tao-ung-dung-Spring-boot"><span class="toc-number">1.</span> <span class="toc-text">Tạo ứng dụng Spring boot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Them-gRPC-vao-dependencies"><span class="toc-number">2.</span> <span class="toc-text">Thêm gRPC vào dependencies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tao-file-proto"><span class="toc-number">3.</span> <span class="toc-text">Tạo file proto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tao-file-Service"><span class="toc-number">4.</span> <span class="toc-text">Tạo file Service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test"><span class="toc-number">5.</span> <span class="toc-text">Test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-code-tham-khao"><span class="toc-number">6.</span> <span class="toc-text">Source code tham khảo</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&text=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&is_video=false&description=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Phần 2: gRPC trong Spring boot&body=Check out this article: http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&title=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&name=Phần 2: gRPC trong Spring boot&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://sgalone.github.io/2020/07/07/part-2-grpc-in-spring-boot/&t=Phần 2: gRPC trong Spring boot" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2020
+    Sgalone
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
