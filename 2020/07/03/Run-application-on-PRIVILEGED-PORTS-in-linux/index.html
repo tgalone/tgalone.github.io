@@ -14,7 +14,7 @@
 <meta property="og:description" content="PRIVILEGED PORTSChắc hẳn các bạn đã từng run các ứng dụng web trên các port 8080 hay 8090 rồi nhỉ? Đó là các port để dev bình thường, và rồi một người mưa bão rồi đó, bạn phải deploy ứng dụng đó lên l">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-03T13:40:26.000Z">
-<meta property="article:modified_time" content="2020-07-08T14:32:54.331Z">
+<meta property="article:modified_time" content="2020-07-15T16:44:14.665Z">
 <meta property="article:author" content="Sgalone">
 <meta name="twitter:card" content="summary">
     
@@ -152,6 +152,7 @@ Do setcap đã phá vỡ cách java tìm kiếm thư viện của nó. Fix thôi
 <li>Liên kết với thư việc mà java đang tìm kiếm:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64&#x2F;jre&#x2F;lib&#x2F;amd64&#x2F;jli&#x2F;libjli.so &#x2F;usr&#x2F;lib&#x2F;</span><br><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure></li>
 <li>Kiểm tra lại nào:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></li>
 <li>Chạy lại file jar nào:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar app.jar --server.port&#x3D;80</span><br></pre></td></tr></table></figure></li>
+<li>Tong ket</li>
 </ol>
 
   </div>
